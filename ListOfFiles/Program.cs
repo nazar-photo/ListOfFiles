@@ -2,36 +2,15 @@
 
 string[] files = {"photo.jpeg","picture.png","document.docx","application.exe","secret_file.docx",
                   "virus.exe", "nude_boobs.png","my_project.cpp","password.txt","game.exe"};
-                  
 
-List<string> extensions=new List<string>();
+var group_by_extension = files.GroupBy(f => f.Substring(f.IndexOf('.')+1));
 
-foreach (var file in files)
+foreach (var extension in group_by_extension)
 {
-    var index = file.IndexOf('.') + 1;
-    extensions.Add(file.Substring(index, file.Length-index));
-}
-
-Dictionary<string, int> list_of_files = new Dictionary<string, int>();
-
-int count = 0;
-foreach (var str in extensions)
-{
-    for (int i = 0; i < extensions.Count; i++)
+    Console.Write($"[{extension.Key} - {extension.Count()}] - ");
+    foreach (var group_of_files in extension)
     {
-        if (str == extensions[i])
-        {
-            count++;
-        }
+        Console.Write($"{group_of_files}, ");
     }
-    if (!list_of_files.ContainsKey(str))
-    {
-        list_of_files.Add(str,count);
-    }
-    count = 0;
-}
-
-foreach (var item in list_of_files)
-{
-    Console.WriteLine(item.ToString());
+    Console.WriteLine();
 }
